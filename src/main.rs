@@ -1,9 +1,14 @@
 use std::net::TcpStream;
 
-fn main() -> std::io::Result<()> {
-    let mut stream = TcpStream::connect("192.168.68.71:25565")?;
+mod proxy;
 
-    println!("Connected to the server!");
+fn main() -> std::io::Result<()> {
+
+    let mut proxy = proxy::Proxy::connect("192.168.68.71:25566".to_string()).expect("Couldn't connect");
+
+    let _ = proxy.write("Lucas sort en boite tous les week-end");
+
+    loop {}
 
     Ok(())
 }
