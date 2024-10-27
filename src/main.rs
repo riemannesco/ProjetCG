@@ -1,10 +1,9 @@
-use std::net::TcpStream;
-
 mod proxy;
 
 fn main() -> std::io::Result<()> {
+    let ip = Some("127.0.0.1:25565".to_string());
 
-    let mut proxy = proxy::Proxy::connect("192.168.68.71:25566".to_string()).expect("Couldn't connect");
+    let mut proxy = proxy::Proxy::connect(ip).expect("Couldn't connect");
 
     let _ = proxy.write("Lucas sort en boite tous les week-end");
 

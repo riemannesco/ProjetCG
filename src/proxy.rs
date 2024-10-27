@@ -5,12 +5,15 @@ pub struct Proxy {
 }
 
 impl Proxy {
-    pub fn connect(target_ip: String) -> Result<Proxy, Box<dyn std::error::Error>> {
-        let stream = std::net::TcpStream::connect(target_ip)?;
+    pub fn connect(target_ip: Option<String>) -> Result<Proxy, Box<dyn std::error::Error + 'static>> {
+        if let Some(target_ip) = target_ip {
+            let stream = std::net::TcpStream::connect(target_ip)?;
 
-        println!("Connected to the Minecraft Server!");
+            println!("Connected to the Minecraft Server!");
 
-        Ok(Proxy { output_stream: Some(stream) })
+            return Ok(Proxy { output_stream: Some(stream) });
+        }
+        Ok(Proxy { output_stream: Option::None })
     }
 
     pub fn write(&mut self, s: &str) -> Result<(), Box<dyn std::error::Error>> {
